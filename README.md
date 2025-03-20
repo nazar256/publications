@@ -6,3 +6,7 @@ A collection of my technical publications, including:
 ## Structure
 
 - `guides/` - Technical guides and tutorials
+
+## Current Guides
+
+- [Steam Deck Hibernation](guides/steam-deck-hibernation.md) - How to enable suspend-then-hibernate functionality on Steam Deck

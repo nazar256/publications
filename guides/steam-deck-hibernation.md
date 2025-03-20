@@ -1,14 +1,20 @@
 # Why
 
-While Steam Deck has suspend to RAM (quick resume) feature, it consumes power, around 15-20% of charge per day (depends on RAM usage). It's ultimately convenient to put it to sleep to resume any moment within seconds right where you left off. But what if you don't resume play in a week or more? It will discharge to zero, which can also degrade battery and sometimes [becomes not bootable anymore](https://www.reddit.com/r/SteamDeck/comments/waofzw/steam_deck_no_longer_properly_turns_on_after/) even after charged.
+While Steam Deck has suspend to RAM (quick resume) feature, it consumes power, around 20-25% of charge per day (depends on RAM usage). It's ultimately convenient to put it to sleep to resume any moment within seconds right where you left off. But what if you don't resume play in a week or more? It will discharge to zero, which can also degrade battery and sometimes [becomes not bootable anymore](https://www.reddit.com/r/SteamDeck/comments/waofzw/steam_deck_no_longer_properly_turns_on_after/) even after charged.
 
 With suspend-then-hibernate you simply put the console to sleep as usual but if you don't come back, let's say, in 6 hours it will store RAM to SSD and practically shuts down. Thus not consuming battery anymore. But unlike normal shutdown you will be able to resume back same as if it was normal sleep, slower but in a matter of seconds.
 
 Currently hibernation is not supported by Valve, and I could not find any solution on that within community. Before Valve implements hibernation on its own, you can consider this guide (without any warranties).
 
-# Considerations
+# DISCLAIMER
 
-This approach was tested on Steam Deck OLED model only (yet) and comes without any warranty to work in your case, even on OLED model. Be mindful and everything you do to your system is your responsibility. It's possible to make it unbootable, though most likely in such case it's possible to fix the system with bootable USB drive. In any case, use this guide at your own risk.
+**IMPORTANT**: This guide provides a method to enable hibernation on Steam Deck, which is not officially supported by Valve. 
+
+This approach was tested on Steam Deck OLED model only and comes with absolutely no warranty. It may not work in your case, even on an OLED model. Everything you do to your system following this guide is your responsibility.
+
+Be aware that incorrect implementation could potentially make your device unbootable. While it's typically possible to recover using a bootable USB drive, proceed at your own risk.
+
+# Considerations
 
 What we need to do:
 - setup big enough swapfile to hold all RAM
@@ -35,6 +41,8 @@ Swapfile needs to be able to contain all data in RAM or sometimes even more if t
 If you are using BTRFS skip to the section "Swapfile on BTRFS". Personally I used scripts from [SteamOS Btrfs](https://gitlab.com/popsulfr/steamos-btrfs) and I can say it is developed to install and work smoothly with well fine-tuned BTRFS parameters for the hardware and use case. Beware though, dedup service may spoil the gameplay on charger sometimes, you may want it disabled and run manually.
 
 ## Preparing the swapfile
+
+Generally swap partition should be preferred, but to set it up you would need to boot from flash drive. Swap partition is automatically mounted by SteamOS and will work always. Unlike, each time swapfile offset is changed (recreated or defragmented) it needs an update in `/etc/default/grub`. Though due to ease of setup and changing the size I prefer swapfiles also on my PCs.
 
 ### Extend swapfile
 
@@ -233,7 +241,7 @@ HibernateDelaySec=60min
 
 **NOTE:** this file may be overwritten by system updates.
 
-Since system drains almost 1% per hour, for me subjectively I found the most reasonable value to sleep 60 minutes before entering hibernation. You can put any time which works for you. As for me, 60 minutes is the time I most likely need to resume very quickly to the game. After an hour, a day or week I'm fine waiting around 15 seconds to resume from hibernation.
+Since system drains almost 1% per hour, for me subjectively I found the most reasonable value to sleep 60 minutes before entering hibernation. You can put any time which works for you. As for me, 60 minutes is the time I most likely need to resume very quickly to the game. After an hour, a day or week I'm fine waiting around 25 seconds to resume from hibernation.
 
 # Tips
 
@@ -253,7 +261,8 @@ If it does not help walk through the guide again and check if everything is in o
 ## Hibernation works for some games but doesn't for the others
 
 Check if you have UMA buffer size 1G in BIOS. It may work better than with 4G.
-Could be that game uses too much memory, GPU memory does not fit into free space of system RAM and hibernation process bails. This should be fixed in linux kernel 6.18, but before that try to keep your game VRAM usage low, by lowering texture quality in particular.
+
+Could be that game uses too much memory, GPU memory does not fit into free space of system RAM and hibernation process bails. This should be fixed in linux kernel 6.14, but before that try to keep your game VRAM usage low, by lowering texture quality in particular. Overall make sure your games don't consume all available RAM. With OSD overlay stats you should see RAM + VRAM usage in total not more than 15GB.
 
 ## Wifi stops working after waking from hibernation, also the system wakes immediately after sleep
 
