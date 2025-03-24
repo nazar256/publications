@@ -268,6 +268,18 @@ Could be that game uses too much memory, GPU memory does not fit into free space
 
 Wifi misbehaved same as bluetooth previously. I used to have a workaround for that too, one way was to detach whole wifi module from PCIe bus and re-attach, but that was not a stable action and there should be no need for that. If you have up to date Steam OS and still experience this issue, go to developer settings (enable it in system settings and it should be at the bottom of sections list) and enable WPA-supplicant mode for WiFi.
 
+
+# Known problems
+
+## Steam OS reports failure to boot
+
+After 4th or 5th resume from hibernation Steam OS shows screen saying it failed to boot multiple times offering to select previous OS version.
+
+Just ignore it and always select "Current" option by pressing "A" button. Be aware, after few more attempts it will select "Previous" option by default, you have to make sure to select "Current" option.
+
+This happens probably because SteamOS has a boot counter enabled which is not reset on resume from hibernation. When I have timeI'll try to figure out how it's done and enable also for hibernation (and suspend-then-hibernate).
+
+
 # Bonus
 
 ## For official dock users
