@@ -277,7 +277,7 @@ After 4th or 5th resume from hibernation Steam OS shows screen saying it failed 
 
 Just ignore it and always select "Current" option by pressing "A" button. Be aware, after few more attempts it will select "Previous" option by default, you have to make sure to select "Current" option.
 
-This happens probably because SteamOS has a boot counter enabled which is not reset on resume from hibernation. When I have timeI'll try to figure out how it's done and enable also for hibernation (and suspend-then-hibernate).
+This happens probably because SteamOS has a boot counter enabled which is not reset on resume from hibernation. When I have time I'll try to figure out how it's done and enable also for hibernation (and suspend-then-hibernate).
 
 
 # Bonus
